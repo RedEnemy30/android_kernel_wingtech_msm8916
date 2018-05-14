@@ -53,6 +53,7 @@ echo "ro.min_freq_0=400000" >> /system/build.prop
 
 replace_line fstab.qcom "/dev/block/zram0" "/dev/block/zram0                              none        swap            defaults             zramsize=1073741824,notrim";
 replace_line init.qcom.power.rc "write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq" "    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 400000";
+insert_line init.qcom.power.rc "    write /sys/devices/system/cpu/cpufreq/interactive/boost 1" after "write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq" "    write /sys/devices/system/cpu/cpufreq/interactive/boost 1"
 replace_line init.qcom.power.rc "    start perfd" "    stop perfd"
 replace_line init.qcom.power.rc "setprop sys.io.scheduler" "    setprop sys.io.scheduler \"cfq"\";
 
