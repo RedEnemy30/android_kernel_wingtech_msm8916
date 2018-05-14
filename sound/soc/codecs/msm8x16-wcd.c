@@ -1316,17 +1316,17 @@ int msm8x16_wcd_write(struct snd_soc_codec *codec, unsigned int reg,
 		return -ENODEV;
 	} else
 #ifdef CONFIG_SOUND_CONTROL_HAX_3_GPL
-		if (!snd_ctrl_enabled)
-			return __msm8x16_wcd_reg_write(codec, reg, (u8)value);
+	if (!snd_ctrl_enabled)
+		return __msm8x16_wcd_reg_write(codec, reg, (u8)value);
 
-		if (!snd_hax_reg_access(reg)) {
-			if (!((val = snd_hax_cache_read(reg)) != -1)) {
-				val = wcd9xxx_reg_read_safe(codec->control_data, reg);
-			}
-		} else {
-			snd_hax_cache_write(reg, value);
-			val = value;
+	if (!snd_hax_reg_access(reg)) {
+		if (!((val = snd_hax_cache_read(reg)) != -1)) {
+			val = wcd9xxx_reg_read_safe(codec->control_data, reg);
 		}
+	} else {
+		snd_hax_cache_write(reg, value);
+		val = value;
+	}
 		return __msm8x16_wcd_reg_write(codec, reg, val);
 #else
 		return __msm8x16_wcd_reg_write(codec, reg, (u8)value);
